@@ -5,7 +5,7 @@ class Bar
     
     def initialize(name, bar_tender)
         @name = name
-        @bar_tender = bar_tender
+        @bar_tender = Bartender.new(bar_tender)
         @bar_system = BarSystem.new()
         @menu = {fries: 5, nachos: 12, wings: 12, beer: 5, whiskey: 8, cocktail: 8}
         @atmosphere = {music: false, television: false}
@@ -53,13 +53,45 @@ class BeerKeg
 
 end
 
+class Bartender
+    attr_accessor :chat_topics
+    attr_reader :name
+
+    def initialize(name)
+        @name = name
+        @chat_topics = {
+            1 => "How was your day?",
+            2 => "The weather today is crazy, right?",
+            3 => "Man, the local sports team stinks!"
+        }
+    end
+
+    def to_s
+        "#{@name}"
+    end
+    
+    def chat
+        random_key = @chat_topics.keys.sample
+        puts @chat_topics[random_key]
+    end
+
+    def make_order
+    end
+
+    def clean
+    end
+end
+
+
+
+
 
 ruby_bar = Bar.new("Ruby", "Viktor")
 
 puts ruby_bar.menu
 puts ruby_bar.bar_tender
 
-ruby_bar.bar_tender=("Hilary")                                            # Shift change, Hilary is bar tender now
+ruby_bar.bar_tender=(Bartender.new("Hilary"))                                            # Shift change, Hilary is bar tender now
 
 puts ruby_bar.bar_tender
 
@@ -71,3 +103,8 @@ ruby_bar.bar_system.on_tap=("Le Chouffe")                                 # Add 
 ruby_bar.bar_system.on_tap=("Labatts")                                    # Remove Labatts to on_tap
 
 ruby_bar.bar_system.on_tap
+
+bar_tender = ruby_bar.bar_tender
+puts bar_tender
+puts bar_tender.class
+bar_tender.chat

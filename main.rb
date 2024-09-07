@@ -25,11 +25,13 @@ class BarSystem
     end
 
     def on_tap=(beer)
-        if @on_tap.include?(beer)
-            @on_tap.delete(beer)
-        else
-            @on_tap << beer
+        for keg in @on_tap
+            if beer == keg.beer_brand
+                @on_tap.delete(beer)
+                return
+            end
         end
+        @on_tap << BeerKeg.new(beer)
     end
 
     def pour_beer(beer)
@@ -42,7 +44,7 @@ class BeerKeg
 
     def initialize(beer_brand)
         @beer_brand = beer_brand
-        @keg_level = keg_level
+        @keg_level = 100
     end
 
     def to_s()
@@ -50,6 +52,7 @@ class BeerKeg
     end
 
 end
+
 
 ruby_bar = Bar.new("Ruby", "Viktor")
 
@@ -62,9 +65,9 @@ puts ruby_bar.bar_tender
 
 ruby_bar.bar_system.pour_beer("Any")                                      # Pour a beer - we don't check whether beer exists yet or not.
 
-ruby_bar.bar_system.on_tap=(BeerKeg.new("Labatts"))                       # Add Labatts to on_tap
-ruby_bar.bar_system.on_tap=(BeerKeg.new("Stella"))                        # Add Stella to on_tap
-ruby_bar.bar_system.on_tap=(BeerKeg.new("Le Chouffe"))                    # Add Le Chouffe to on_tap
-ruby_bar.bar_system.on_tap=(BeerKeg.new("Labatts"))                       # Add Labatts to on_tap
+ruby_bar.bar_system.on_tap=("Labatts")                                    # Add Labatts to on_tap
+ruby_bar.bar_system.on_tap=("Stella")                                     # Add Stella to on_tap
+ruby_bar.bar_system.on_tap=("Le Chouffe")                                 # Add Le Chouffe to on_tap
+ruby_bar.bar_system.on_tap=("Labatts")                                    # Remove Labatts to on_tap
 
 ruby_bar.bar_system.on_tap

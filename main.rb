@@ -75,7 +75,9 @@ class Bartender
         puts @chat_topics[random_key]
     end
 
-    def make_order
+    def make_order(order)
+        sleep(2)
+        puts "Here is your #{order}"
     end
 
     def clean
@@ -95,16 +97,19 @@ ruby_bar.bar_tender=(Bartender.new("Hilary"))                                   
 
 puts ruby_bar.bar_tender
 
-ruby_bar.bar_system.pour_beer("Any")                                      # Pour a beer - we don't check whether beer exists yet or not.
+ruby_bar.bar_system.pour_beer("Any")                                        # Pour a beer - we don't check whether beer exists yet or not.
 
-ruby_bar.bar_system.on_tap=("Labatts")                                    # Add Labatts to on_tap
-ruby_bar.bar_system.on_tap=("Stella")                                     # Add Stella to on_tap
-ruby_bar.bar_system.on_tap=("Le Chouffe")                                 # Add Le Chouffe to on_tap
-ruby_bar.bar_system.on_tap=("Labatts")                                    # Remove Labatts to on_tap
+ruby_bar.bar_system.on_tap=("Labatts")                                      # Add Labatts to on_tap
+ruby_bar.bar_system.on_tap=("Stella")                                       # Add Stella to on_tap
+ruby_bar.bar_system.on_tap=("Le Chouffe")                                   # Add Le Chouffe to on_tap
+ruby_bar.bar_system.on_tap=("Labatts")                                      # Remove Labatts to on_tap
 
 ruby_bar.bar_system.on_tap
 
 bar_tender = ruby_bar.bar_tender
 puts bar_tender
 puts bar_tender.class
-bar_tender.chat
+
+bar_tender.chat                                                             # Bartender can chat
+bar_tender.make_order("pizza")                                              # Bartender can make order - we still don't check whether order eixsts yet or not
+                                                                            # IDEA: Hilary and Viktor should be able to chat about different things, learn diferent topics?

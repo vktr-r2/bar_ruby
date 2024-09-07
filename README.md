@@ -34,7 +34,7 @@ BarTender
     clean
 
 
-Drink(Superclass)
+Drink(Superclass) #OR should Drink be a module??
     self.name = String
 
     look_delicious

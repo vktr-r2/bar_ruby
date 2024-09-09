@@ -54,3 +54,6 @@ Cocktail(Drink)
 
 
 
+Questions for Roms:
+
+1. I ran into some design troubles when I tried to implement how a Bartender object could check to see if the order is something that the bar can serve.  What is the best way to proceed?  The Bar stores the menu data, and also stores which Bartender object is currently working. 

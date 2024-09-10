@@ -12,16 +12,16 @@ class Bar
 end
 
 class BarSystem
+    attr_reader = :on_tap
 
     def initialize
         @on_tap = []
     end
 
     def on_tap
-        for keg in @on_tap
-            puts keg
-        end
+        return @on_tap
     end
+
 
     def on_tap=(beer)
         for keg in @on_tap
@@ -35,14 +35,11 @@ class BarSystem
 
     def pour_beer(beer)
         keg = @on_tap.find { |keg| keg.beer_brand == beer }
-        
-        if keg.nil?
-          return "*No #{beer} on tap*"
-        elsif keg.keg_level > 0
-          keg.keg_level -= 1
-          return "*Glass of #{beer}*"
+        if keg.keg_level > 0
+            keg.keg_level=(keg.keg_level - 1)
+            return "*Glass of #{beer}*"
         else
-          return "*#{beer} keg is empty*"
+            return "*#{beer} keg is empty*"
         end
       end
 end
@@ -55,6 +52,7 @@ class Bartender
     def initialize(name, bar_system, menu)
         @name = name
         @bar_system = bar_system
+        @menu = menu
         @chat_topics = {
             1 => "How was your day?",
             2 => "The weather today is crazy, right?",
@@ -71,17 +69,27 @@ class Bartender
         puts @chat_topics[random_key]
     end
     
-    def make_order(order)
+    def order(*args)
+        order_to_be_made = []
+        for item in args 
+            if self.check_menu(item)
+                order_to_be_made << item
+            else
+                puts "We don't sell #{item}"
+            end
+        end
         sleep(2)
-        puts "Here is your #{order}"
+        puts "Here is your #{args}"
     end
     
     def clean
         puts "*#{@name} tidies up*"
     end
     
-    def check_menu(order)
-        
+    private
+
+    def check_menu(order_item)
+        return @bar_system.on_tap.find { |keg| keg.beer_brand == order_item } || @menu.find { |menu_item, price| menu_item == order_item }
     end
     
     def get_drink(drink)
@@ -94,7 +102,8 @@ class Bartender
 end
 
 class BeerKeg
-    attr_reader :keg_level, :beer_brand
+    attr_accessor :keg_level
+    attr_reader :beer_brand
 
     def initialize(beer_brand)
         @beer_brand = beer_brand
@@ -157,4 +166,10 @@ ruby_bar.bar_tender=(hilary)
 
 puts ruby_bar.bar_tender
 
-puts hilary.get_beer("Stella")
+
+ruby_bar.bar_system.on_tap=("Labatts")                                      # Add Labatts to on_tap
+ruby_bar.bar_system.on_tap=("Stella")                                       # Add Stella to on_tap
+ruby_bar.bar_system.on_tap=("Le Chouffe")                                   # Add Le Chouffe to on_tap
+
+
+hilary.order("Stella", "fries", "pizza")

@@ -34,13 +34,12 @@ class BarSystem
         keg = on_tap.find { |keg| keg.beer_brand == beer }
         if keg.keg_level > 0
             keg.keg_level=(keg.keg_level - 1)
-            return "*Glass of #{beer}*"
+            return "*Frosty glass of #{beer}*"
         else
             return "*#{beer} keg is empty*"
         end
       end
 end
-
 
 class Bartender
     attr_accessor :chat_topics, :bar_system, :menu
@@ -67,16 +66,17 @@ class Bartender
     end
     
     def make_order(*args)
-        order_to_be_made = []
+        customer_order = []
         for order_item in args 
             if self.check_order_item(order_item)
-                order_to_be_made << order_item
+                customer_order << make_drink(order_item)
             else
-                puts "We don't sell #{order_item}"
+                puts "Sorry, we don't sell #{order_item}"
             end
         end
-        sleep(2)
-        puts "Here is your #{order_to_be_made}"
+        sleep(3)
+        puts "Here is your order:"
+        puts customer_order
     end
     
     def clean
@@ -104,7 +104,10 @@ class Bartender
     end
     
     def make_drink(drink)
-
+        if bar_system.on_tap.find { |keg| keg.beer_brand == drink }
+            return get_beer(drink)
+        end
+        Drink.new(drink)
     end
     
     def get_beer(beer)
@@ -134,13 +137,14 @@ class Drink
     end
     
     def to_s
-        "#{drink_name} *looks delicious*"
+        "*Delicious looking #{drink_name}*"
     end
 end
 
 =begin
-# IDEA: Bartender should ask customer for right amount of money before making order
-# IDEA: Hilary and Viktor should be able to chat about different things, learn diferent topics?
+FEATURE SUGGESTIONS:
+ - Bartender should ask customer for right amount of money before making order
+ - Bartenders should be able to chat about different things, learn diferent topics?
 =end
 
 ruby_bar = Bar.new("Ruby Bar", "Viktor")
@@ -156,12 +160,9 @@ puts ruby_bar.bar_tender
 hilary.update_beers_on_tap("Labatts")                                      # Add Labatts to on_tap
 hilary.update_beers_on_tap("Stella")                                       # Add Stella to on_tap
 hilary.update_beers_on_tap("Le Chouffe")                                   # Add Le Chouffe to on_tap
-hilary.update_beers_on_tap("Labatts")                                      # Remove Labatts to on_tap
+hilary.update_beers_on_tap("Labatts")                                      # Remove Labatts from on_tap
 hilary.update_beers_on_tap("Canadian")                                     # Add Canadian
 
 hilary.recite_menu
 
-hilary.make_order("beer", "cocktail", "fries", "pizza")
-
-cocktail = Drink.new("cocktail")
-puts cocktail
+hilary.make_order("Stella", "cocktail", "fries", "pizza")

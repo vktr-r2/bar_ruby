@@ -5,7 +5,7 @@ class Bar
     def initialize(name, bar_tender)
         @name = name
         @bar_system = BarSystem.new()
-        @menu = {beer: 5, whiskey: 8, cocktails: 8, wine: 8}
+        @menu = {beer: 5, whiskey: 8, cocktail: 8, wine: 8}
         @atmosphere = {music: false, television: false}
         @bar_tender = Bartender.new(bar_tender, bar_system, menu)              # Bartender should know what the bar serves and be able to serve it.
     end
@@ -66,17 +66,17 @@ class Bartender
         puts chat_topics[random_key]
     end
     
-    def order(*args)
+    def make_order(*args)
         order_to_be_made = []
-        for item in args 
-            if self.check_menu(item)
-                order_to_be_made << item
+        for order_item in args 
+            if self.check_order(order_item)
+                order_to_be_made << order_item
             else
-                puts "We don't sell #{item}"
+                puts "We don't sell #{order_item}"
             end
         end
         sleep(2)
-        puts "Here is your #{args}"
+        puts "Here is your #{order_to_be_made}"
     end
     
     def clean
@@ -96,11 +96,13 @@ class Bartender
     end
 
 
-    def check_menu(order_item)
-        return bar_system.on_tap.find { |keg| keg.beer_brand == order_item } || menu.find { |menu_item, price| menu_item == order_item }
+    def check_order(order_item)
+        check_beers = bar_system.on_tap.find { |keg| keg.beer_brand == order_item }
+        check_menu = menu.find { |menu_item, price| menu_item == order_item.to_sym }
+        check_beers || check_menu
     end
     
-    def get_drink(drink)
+    def make_drink(drink)
 
     end
     
@@ -134,9 +136,6 @@ ruby_bar = Bar.new("Ruby Bar", "Viktor")
 viktor = ruby_bar.bar_tender
 hilary = Bartender.new("Hilary", ruby_bar.bar_system, ruby_bar.menu)
 
-puts viktor.class
-puts hilary.class
-
 ruby_bar.bar_tender=(hilary)
 
 puts ruby_bar.bar_tender
@@ -148,9 +147,6 @@ hilary.change_tap("Le Chouffe")                                   # Add Le Chouf
 hilary.change_tap("Labatts")                                      # Remove Labatts to on_tap
 hilary.change_tap("Canadian")                                     # Add Canadian
 
-puts hilary.bar_system.on_tap()
+hilary.recite_menu
 
-hilary.recite_menu()
-hilary.get_beer("Stella")
-
-hilary.order("Stella", "fries", "pizza")
+hilary.make_order("beer", "cocktail", "fries", "pizza")

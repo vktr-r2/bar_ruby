@@ -1,3 +1,4 @@
+# Bar class stores bar data.  Bar will instantiate a BarSystem and Bartender when instantiated.
 class Bar
     attr_accessor :bar_tender, :atmosphere
     attr_reader :name, :menu, :bar_system
@@ -11,6 +12,7 @@ class Bar
     end
 end
 
+# BarSystem handles which BeerKeg objects are served, and pours the beers.
 class BarSystem
     attr_reader :on_tap
 
@@ -20,6 +22,7 @@ class BarSystem
 
     protected
 
+    # Custom setter for on_tap instance variable.
     def on_tap=(beer)
         for keg in on_tap
             if beer == keg.beer_brand
@@ -30,17 +33,19 @@ class BarSystem
         on_tap << BeerKeg.new(beer)
     end
 
+    # Instantiates a Beer object and reduces BeerKeg.keg_level value.
     def pour_beer(beer)
         keg = on_tap.find { |keg| keg.beer_brand == beer }
         if keg.keg_level > 0
             keg.keg_level=(keg.keg_level - 1)
-            return "*Frosty glass of #{beer}*"
+            return Beer.new(beer)
         else
             return "*#{beer} keg is empty*"
         end
       end
 end
 
+# Bartender manages the bar.  Can pour beer, make drink, take order, clean, chat, recite menu, and update beers served in BarSystem object.
 class Bartender
     attr_accessor :chat_topics, :bar_system, :menu
     attr_reader :name
@@ -60,11 +65,13 @@ class Bartender
         "#{name}"
     end
     
+    # Randomly puts a chat_topic.
     def chat
         random_key = chat_topics.keys.sample
         puts chat_topics[random_key]
     end
     
+    # Checks whether item is served by bar, if true makes order, if false advises customer this isn't served.
     def make_order(*args)
         customer_order = []
         for order_item in args 
@@ -83,10 +90,12 @@ class Bartender
         puts "*#{name} tidies up*"
     end
 
+    # Uses protected on_tap setter method from BarSystem class to update on_tap array.
     def update_beers_on_tap(beer)
         bar_system.send(:on_tap=, beer)
     end
 
+    # Lists menu items served, and beers on tap.
     def recite_menu
         menu_items = menu.keys
         puts "We serve:"
@@ -97,12 +106,14 @@ class Bartender
 
     private
 
+    # Takes order_item and checks if it is a key in the menu array, or item in the on_tap array.
     def check_order_item(order_item)
         check_beers = bar_system.on_tap.find { |keg| keg.beer_brand == order_item }
         check_menu = menu.find { |menu_item, price| menu_item == order_item.to_sym }
         check_beers || check_menu
     end
     
+    # Instantiates either a Drink or Beer object
     def make_drink(drink)
         if bar_system.on_tap.find { |keg| keg.beer_brand == drink }
             return get_beer(drink)
@@ -110,11 +121,13 @@ class Bartender
         Drink.new(drink)
     end
     
+    # Uses protected pour_beer method from BarSystem to instantiate a Beer object. 
     def get_beer(beer)
         bar_system.send(:pour_beer, beer)
     end
 end
 
+# Stores beer_brand and keg_level
 class BeerKeg
     attr_accessor :keg_level
     attr_reader :beer_brand
@@ -126,6 +139,18 @@ class BeerKeg
 
     def to_s()
         "#{beer_brand}"
+    end
+end
+
+class Beer
+    attr_reader :beer_brand
+
+    def initialize(beer_brand)
+        @beer_brand = beer_brand
+    end
+
+    def to_s
+        "*Frosty glass of #{beer_brand}*"
     end
 end
 

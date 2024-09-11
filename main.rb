@@ -10,6 +10,10 @@ class Bar
         @atmosphere = {music: false, television: false}
         @bar_tender = Bartender.new(bar_tender, bar_system, menu)              # Bartender should know what the bar serves and be able to serve it.
     end
+
+    def to_s
+        "#{name}"
+    end
 end
 
 # BarSystem handles which BeerKeg objects are served, and pours the beers.
@@ -172,15 +176,16 @@ FEATURE SUGGESTIONS:
  - Bartenders should be able to chat about different things, learn diferent topics?
 =end
 
-ruby_bar = Bar.new("Ruby Bar", "Viktor")
+ruby_bar = Bar.new("Ruby Bar", "Viktor")                                    # ooooh a new bar has just opened up
 
-viktor = ruby_bar.bar_tender
+viktor = ruby_bar.bar_tender                                                
 hilary = Bartender.new("Hilary", ruby_bar.bar_system, ruby_bar.menu)
 
-ruby_bar.bar_tender=(hilary)
+ruby_bar.bar_tender=(hilary)                                               # viktor was a lazy bartender so he was fired.  Welcome hilary!
 
-puts ruby_bar.bar_tender
+puts "#{ruby_bar} is managed by #{ruby_bar.bar_tender}"
 
+puts "======================="
 
 hilary.update_beers_on_tap("Labatts")                                      # Add Labatts to on_tap
 hilary.update_beers_on_tap("Stella")                                       # Add Stella to on_tap
@@ -188,6 +193,16 @@ hilary.update_beers_on_tap("Le Chouffe")                                   # Add
 hilary.update_beers_on_tap("Labatts")                                      # Remove Labatts from on_tap
 hilary.update_beers_on_tap("Canadian")                                     # Add Canadian
 
-hilary.recite_menu
+hilary.recite_menu                                                         # What does the bar serve?
 
-hilary.make_order("Stella", "cocktail", "fries", "pizza")
+puts "======================="
+
+hilary.make_order("Stella", "cocktail", "fries", "pizza")                  # This is my order
+
+puts "======================="
+
+hilary.chat                                                                # Hilary likes to chat with the customers 
+
+puts "======================="
+
+hilary.clean                                                               # Time to clean the bar before close.

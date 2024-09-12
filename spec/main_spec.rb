@@ -85,7 +85,7 @@ RSpec.describe Bartender do
     end
 
     it "makes an order for an available drink" do
-      expect { bartender.make_order("Stella") }.to output(/Here is your order:/).to_stdout
+      expect { bartender.make_order("Stella", "wine") }.to output(/Here is your order:\n\*Frosty glass of Stella\*\n\*Delicious looking wine\*/).to_stdout
     end
 
     it "informs customer if item is not available" do
@@ -103,7 +103,8 @@ RSpec.describe Bartender do
   describe "#recite_menu" do
     it "lists menu items and beers on tap" do
       bartender.update_beers_on_tap("Stella")
-      expect { bartender.recite_menu }.to output(/We serve:\nbeer\nwhiskey\ncocktail\nwine\nFor beer we have:/).to_stdout
+      bartender.update_beers_on_tap("Canadian")
+      expect { bartender.recite_menu }.to output(/We serve:\nbeer\nwhiskey\ncocktail\nwine\nFor beer we have:\nStella\nCanadian/).to_stdout
     end
   end
 end

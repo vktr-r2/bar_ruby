@@ -134,7 +134,7 @@ RSpec.describe Beer do
 end
 
 RSpec.describe Drink do
-  let(:drink) { Drink.new("Mojito") }
+  let(:drink) { Drink.new("Wine") }
 
   describe "#initialize" do
     it "creates a Drink object with a drink name" do

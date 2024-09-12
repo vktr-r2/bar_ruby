@@ -176,33 +176,35 @@ FEATURE SUGGESTIONS:
  - Bartenders should be able to chat about different things, learn diferent topics?
 =end
 
-ruby_bar = Bar.new("Ruby Bar", "Viktor")                                    # ooooh a new bar has just opened up
+if __FILE__ == $0
+    ruby_bar = Bar.new("Ruby Bar", "Viktor")                                    # ooooh a new bar has just opened up
 
-viktor = ruby_bar.bar_tender                                                
-hilary = Bartender.new("Hilary", ruby_bar.bar_system, ruby_bar.menu)
+    viktor = ruby_bar.bar_tender                                                
+    hilary = Bartender.new("Hilary", ruby_bar.bar_system, ruby_bar.menu)
 
-ruby_bar.bar_tender=(hilary)                                               # viktor was a lazy bartender so he was fired.  Welcome hilary!
+    ruby_bar.bar_tender=(hilary)                                               # viktor was a lazy bartender so he was fired.  Welcome hilary!
 
-puts "#{ruby_bar} is managed by #{ruby_bar.bar_tender}"
+    puts "#{ruby_bar} is managed by #{ruby_bar.bar_tender}"
 
-puts "======================="
+    puts "======================="
 
-hilary.update_beers_on_tap("Labatts")                                      # Add Labatts to on_tap
-hilary.update_beers_on_tap("Stella")                                       # Add Stella to on_tap
-hilary.update_beers_on_tap("Le Chouffe")                                   # Add Le Chouffe to on_tap
-hilary.update_beers_on_tap("Labatts")                                      # Remove Labatts from on_tap
-hilary.update_beers_on_tap("Canadian")                                     # Add Canadian
+    hilary.update_beers_on_tap("Labatts")                                      # Add Labatts to on_tap
+    hilary.update_beers_on_tap("Stella")                                       # Add Stella to on_tap
+    hilary.update_beers_on_tap("Le Chouffe")                                   # Add Le Chouffe to on_tap
+    hilary.update_beers_on_tap("Labatts")                                      # Remove Labatts from on_tap
+    hilary.update_beers_on_tap("Canadian")                                     # Add Canadian
 
-hilary.recite_menu                                                         # What does the bar serve?
+    hilary.recite_menu                                                         # What does the bar serve?
 
-puts "======================="
+    puts "======================="
 
-hilary.make_order("Stella", "cocktail", "fries", "pizza")                  # This is my order
+    hilary.make_order("Stella", "cocktail", "fries", "pizza")                  # This is my order
 
-puts "======================="
+    puts "======================="
 
-hilary.chat                                                                # Hilary likes to chat with the customers 
+    hilary.chat                                                                # Hilary likes to chat with the customers 
 
-puts "======================="
+    puts "======================="
 
-hilary.clean                                                               # Time to clean the bar before close.
+    hilary.clean                                                               # Time to clean the bar before close.
+end

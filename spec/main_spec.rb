@@ -107,3 +107,15 @@ RSpec.describe Bartender do
     end
   end
 end
+
+
+RSpec.describe BeerKeg do
+  let(:beer_keg) { BeerKeg.new("Stella") }
+
+  describe '#initialize' do
+    it 'creates a beer keg with a beer brand and keg level' do
+      expect(beer_keg.beer_brand).to eq("Stella")
+      expect(beer_keg.keg_level).to eq(100)
+    end
+  end
+end

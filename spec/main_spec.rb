@@ -108,7 +108,6 @@ RSpec.describe Bartender do
   end
 end
 
-
 RSpec.describe BeerKeg do
   let(:beer_keg) { BeerKeg.new("Stella") }
 
@@ -116,6 +115,20 @@ RSpec.describe BeerKeg do
     it 'creates a beer keg with a beer brand and keg level' do
       expect(beer_keg.beer_brand).to eq("Stella")
       expect(beer_keg.keg_level).to eq(100)
+    end
+  end
+end
+
+RSpec.describe Beer do
+  let(:beer) { Beer.new("Stella") }
+
+  describe '#initialize' do
+    it 'creates a Beer object with a beer brand' do
+      expect(beer.beer_brand).to eq("Stella")
+    end
+
+    it 'returns a string representation of the beer' do
+      expect(beer.to_s).to eq("*Frosty glass of Stella*")
     end
   end
 end

@@ -1,59 +1,45 @@
-Welcome to Bar Ruby!  Where the drinks are cold, and the code is clean.
+# Bar Ruby
 
-The bar_ruby repo is intended to help me practice OOP and SOLID programming principles.  Feel free to make it your own!
+### Welcome to Bar Ruby!  Where the drinks are cold, and the code is clean (hopefully).
 
+##### The bar_ruby repo is intended to help me practice OOP and SOLID programming principles.  Feel free to make it your own!
 
+- The Bar needs a Bartender and BarSystem
+- The BarSystem stocks BeerKeg and has a pour_beer method
+- Bartender needs a BarSystem to pour Beer, and needs a Bar to work in
+- Bartender can also make any other Drink that is on the menu.
 
-
-PROPOSED ARCHITECTURE NOTES
- 
-Bar
-    self.bar_system = BarSystem
-    self.bar_tender = BarTender
-    self.menu = Dict/Hash
-
-
-BarSystem
-    self.beers_on_tap = List[BeerKeg]
-    
-    pour_beer
-
-
-BeerKeg
-    self.beer_brand = String
-    self.keg_level = Int
-
-    show_keg_level
-
-
-BarTender
-    self.name = String
-
-    chat
-    make_drink
-    clean
-
-
-Drink(Superclass) #OR should Drink be a module??
-    self.name = String
-
-    look_delicious
+<em>
+Ruby Bar is managed by Hilary
+=======================
+We serve:
+beer
+whiskey
+cocktail
+wine
+For beer we have:
+Labatts
+Stella
+Le Chouffe
+Canadian
+=======================
+Sorry, we don't sell fries
+Sorry, we don't sell pizza
+Here is your order:
+*Frosty glass of Stella*
+*Delicious looking cocktail*
+=======================
+Man, the local sports team stinks!
+=======================
+*Hilary tidies up*
+</em>
 
 
-Beer(Drink)
+##### FEEDBACK AND IDEAS:
 
-    bubble
+The Bartender class does to much (clean, chat, make_drink etc)?
+    - It might be best to have Bartender just handle their job with a generic method like do_thing, and things the bartender does could be their own class?
 
-
-Whiskey(Drink)
-    self.ice_cubes
-
-
-Cocktail(Drink)
-    self.ingredients
-
-
-
-Questions for Roms:
-
-1. I ran into some design troubles when I tried to implement how a Bartender object could check to see if the order is something that the bar can serve.  What is the best way to proceed?  The Bar stores the menu data, and also stores which Bartender object is currently working. 
+Bar BarSystem and Bartender are too tightly coupled?
+    - Need to better understand what this fully means
+    - A better approach would be to depend on abstractions (like interfaces or base classes) so that different types of bartenders or bar systems could be injected without changing the Bar class.  For example, the Bartender could depend on an abstract interface for BarSystem instead of the concrete class.

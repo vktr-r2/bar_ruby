@@ -108,6 +108,10 @@ class Bartender
         puts bar_system.on_tap
     end
 
+    def learn_new_chat topic(topic)
+        chat_topics[chat_topics.keys.max + 1] = topic
+    end
+
     private
 
     # Takes order_item and checks if it is a key in the menu array, or item in the on_tap array.

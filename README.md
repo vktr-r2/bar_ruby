@@ -10,27 +10,27 @@
 - Bartender can also make any other Drink that is on the menu.
 
 <em>
-Ruby Bar is managed by Hilary
-=======================
-We serve:
-beer
-whiskey
-cocktail
-wine
-For beer we have:
-Labatts
-Stella
-Le Chouffe
-Canadian
-=======================
-Sorry, we don't sell fries
-Sorry, we don't sell pizza
-Here is your order:
-*Frosty glass of Stella*
-*Delicious looking cocktail*
-=======================
-Man, the local sports team stinks!
-=======================
+Ruby Bar is managed by Hilary  <br/>
+======================= <br/>
+We serve:<br/>
+beer<br/>
+whiskey<br/>
+cocktail<br/>
+wine<br/>
+For beer we have:<br/>
+Labatts<br/>
+Stella<br/>
+Le Chouffe<br/>
+Canadian<br/>
+=======================<br/>
+Sorry, we don't sell fries<br/>
+Sorry, we don't sell pizza<br/>
+Here is your order:<br/>
+*Frosty glass of Stella*<br/>
+*Delicious looking cocktail*<br/>
+=======================<br/>
+Man, the local sports team stinks!<br/>
+=======================<br/>
 *Hilary tidies up*
 </em>
 

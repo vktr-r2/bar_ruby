@@ -48,3 +48,10 @@ BarSystem has a custom setter method for the @on_tap instance variable.  But wha
     - For example, maybe the caller should tell us whether we want to add the BeerKeg or try remove it.  Maybe we actually WANT two Stella kegs in on_tap because its a popular beer, so we need the caller to pass us a second arg now.
     - How could I have originally implemented this method to allow for this?
     - As it stands now, I'd have to go through my code and find everywhere where on_tap was being called and update it.  Not ideal!
+
+What should be a Struct, and what should be a Class?  Stuct can help avoid a lot of ugly boilerplate code.
+    - Bar is pretty simple, really seems to only store data.
+    - The same case can be made for Beer, Drink, and BeerKeg
+
+Combining iteration with the action that is being performed is a common case of multiple responsibilities for a method.
+    - This happens in a few places in my code.

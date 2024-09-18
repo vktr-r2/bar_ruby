@@ -6,7 +6,6 @@ class Bar
         @name = name
         @bar_tender = bar_tender
         @bar_system = bar_system
-        @menu = {beer: 5, whiskey: 8, cocktail: 8, wine: 8}
     end
 
     def to_s
@@ -36,6 +35,10 @@ class Human
         end
     end
 
+    def to_s
+        "#{name}"
+    end
+
     # Abstract method that must be implemented in subclasses
     def chat
       raise NotImplementedError, "You must implement the chat method"
@@ -47,8 +50,32 @@ class Human
     end
 end
 
+class Bartender < Human
+    attr_reader :name
 
-iteration_two_bar = Bar.new("Iteration Two")
-puts iteration_two_bar
-iteration_two_bar.bar_system = "Beer", "Whiskey", "Cocktail", "Wine"
-puts iteration_two_bar.bar_system
+    def initialize(name)
+        super(name)
+    end
+
+    def chat
+        random_chat_topic = chat_topics.sample
+        puts random_chat_topic
+    end
+
+    def clean
+        puts "*Cleans glassware*"
+    end
+end
+
+
+#iteration_two_bar = Bar.new("Iteration Two")
+#puts iteration_two_bar
+#iteration_two_bar.bar_system = "Beer", "Whiskey", "Cocktail", "Wine"
+#puts iteration_two_bar.bar_system
+
+#hilary = Bartender.new("Hilary")
+#puts hilary
+
+#hilary.add_chat_topics("How was your day?", "The weather today is crazy, right?", "Politics are a mess!")
+#puts hilary.chat_topics
+#hilary.clean

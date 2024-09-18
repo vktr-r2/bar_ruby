@@ -74,8 +74,16 @@ class BarSystem
         @products = products
     end
 
-    def update_products(*args)
-        raise NotImplementedError, "You must implement the update_products method"
+    def add_products(*args)
+        for arg in args
+            @products << arg unless products.include?(arg)
+        end
+    end
+
+    def remove_products(*args)
+        for arg in args
+            @products.delete(arg) if products.include?(arg)
+        end
     end
 
     def make_product(*args)
@@ -83,9 +91,23 @@ class BarSystem
     end
 end
 
+class FoodSystem < BarSystem
 
+    def make_product(*args)
+        args.each do |arg|
+            puts "Here is your #{arg}"
+        end
+    end
+end
 
-
+class LiquorSystem < BarSystem
+    
+    def make_product(*args)
+        args.each do |arg|
+            puts "Here is your #{arg}"
+        end
+    end
+end
 
 #iteration_two_bar = Bar.new("Iteration Two")
 #puts iteration_two_bar
@@ -98,3 +120,27 @@ end
 #hilary.add_chat_topics("How was your day?", "The weather today is crazy, right?", "Politics are a mess!")
 #puts hilary.chat_topics
 #hilary.clean
+
+
+
+
+
+iteration_two_bar = Bar.new("Iteration Two")
+#puts iteration_two_bar
+#iteration_two_bar.bar_system = "Beer", "Whiskey", "Cocktail", "Wine"
+#puts iteration_two_bar.bar_system
+
+#hilary = Bartender.new("Hilary")
+#puts hilary
+
+#hilary.add_chat_topics("How was your day?", "The weather today is crazy, right?", "Politics are a mess!")
+#puts hilary.chat_topics
+#hilary.clean
+
+food_system = FoodSystem.new(["Burger", "Fries", "Salad"])
+food_system.add_products("Pizza", "Salad")
+puts "AFTER ADDING PRODUCTS:"
+puts food_system.products
+food_system.remove_products("Sushi", "Salad")
+puts "AFTER REMOVING PRODUCTS:"
+puts food_system.products

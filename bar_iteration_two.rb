@@ -17,8 +17,34 @@ class Bar
         args.each do |arg|
           @bar_system << arg
         end
-      end
+    end
 
+end
+
+class Human
+    attr_reader :name
+    attr_accessor :chat_topics
+
+    def initialize(name)
+        @name = name
+        @chat_topics = []
+    end
+
+    def add_chat_topics(*args)
+        args.each do |arg|
+            @chat_topics << arg
+        end
+    end
+
+    # Abstract method that must be implemented in subclasses
+    def chat
+      raise NotImplementedError, "You must implement the chat method"
+    end
+  
+    # Abstract method that must be implemented in subclasses
+    def clean
+      raise NotImplementedError, "You must implement the clean method"
+    end
 end
 
 

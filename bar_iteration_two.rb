@@ -67,6 +67,25 @@ class Bartender < Human
     end
 end
 
+class BarSystem
+    attr_accessor :products
+    
+    def initialize(products)
+        @products = products
+    end
+
+    def update_products(*args)
+        raise NotImplementedError, "You must implement the update_products method"
+    end
+
+    def make_product(*args)
+        raise NotImplementedError, "You must implement the make_product method"
+    end
+end
+
+
+
+
 
 #iteration_two_bar = Bar.new("Iteration Two")
 #puts iteration_two_bar

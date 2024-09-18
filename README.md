@@ -4,6 +4,8 @@
 
 ##### The bar_ruby repo is intended to help me practice OOP and SOLID programming principles.  Feel free to make it your own!
 
+### WARNING: bar_iteration_two.rb is still a work in progress!
+
 - The Bar needs a Bartender and BarSystem
 - The BarSystem stocks BeerKeg and has a pour_beer method
 - Bartender needs a BarSystem to pour Beer, and needs a Bar to work in

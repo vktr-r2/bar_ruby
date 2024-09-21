@@ -1,10 +1,10 @@
+# Responsible for storing systems that serve the products.
 class Bar
     attr_reader :name, :bar_systems, :menu
     attr_accessor :bar_tender
 
-    def initialize(name, bar_tender=nil, bar_systems=[])
+    def initialize(name, bar_systems=[])
         @name = name
-        @bar_tender = bar_tender
         @bar_systems = bar_systems
     end
 
@@ -20,6 +20,24 @@ class Bar
 
 end
 
+# Responsible for teaching a Bartender what Bar serves (allows Bartender to work at different Bars)
+class BarTrainer
+
+    def initialize(bar)
+        @bar = bar
+    end
+
+    def make_menu
+    
+    end
+
+    def teach_menu
+    
+    end
+
+end
+
+# Responsible for basic human functions and data
 class Human
     attr_reader :name
     attr_accessor :chat_topics
@@ -52,6 +70,19 @@ end
 
 class Bartender < Human
 
+    public
+    def learn_bar_menu(BarTrainer)
+    
+    end
+
+    def take_order(order)
+
+    end
+
+    def serve_order
+    
+    end
+
     def chat
         random_chat_topic = chat_topics.sample
         puts random_chat_topic
@@ -59,6 +90,15 @@ class Bartender < Human
 
     def clean
         puts "*Cleans glassware*"
+    end
+
+    private
+    def check_if_bar_serves_product
+
+    end
+
+    def make_product
+    
     end
 end
 

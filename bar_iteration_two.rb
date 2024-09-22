@@ -20,7 +20,7 @@ class Bar
 end
 
 # Responsible for teaching a Bartender what Bar serves (allows Bartender to work at different Bars)
-class BarSystemsManager
+class MenuManager
 
     attr_reader :bar, :menu
 
@@ -30,7 +30,7 @@ class BarSystemsManager
         @menu = make_menu(@bar_systems)
     end
 
-    protected
+    public
     def teach_menu
         menu
     end
@@ -78,17 +78,17 @@ end
 
 class Bartender < Human
 
+    attr_reader :current_bar_menu
+
+    def initialize(name, chat_topics=[])
+        super(name)
+        super(chat_topics)
+        @current_bar_menu = {}
+    end
+
     public
-    def train_bartender(bar_trainer)
-    
-    end
+    def order(*args)
 
-    def take_order(order)
-
-    end
-
-    def serve_order
-    
     end
 
     def chat
@@ -100,6 +100,10 @@ class Bartender < Human
         puts "*Cleans glassware*"
     end
 
+    def set_current_bar_menu(menu_manager)
+        @current_bar_menu = learn_menu(menu_manager)
+    end
+
     private
     def check_if_bar_serves_product
 
@@ -107,6 +111,14 @@ class Bartender < Human
 
     def make_product
     
+    end
+
+    def serve_order
+    
+    end
+
+    def learn_menu(menu_manager)
+        menu_manager.teach_menu
     end
 end
 
@@ -191,14 +203,17 @@ foods = FoodSystem.new("Fries", "Wings", "Nachos")
 # 3. Add BarSystems to Bar
 iteration_two_bar.bar_systems = cocktails, beers, foods
 
-# 3. Create BarSystemsManager object for this particular bar (creates the menu based on BarSystems installed in the Bar)
-bar_system_manager = BarSystemsManager.new(iteration_two_bar)
-puts bar_system_manager.menu
+# 3. Create MenuManager object for this particular bar (creates the menu based on BarSystems installed in the Bar)
+menu_manager = MenuManager.new(iteration_two_bar)
+# puts menu_manager.menu
 
 # 4. Create Bartender
-
+hilary = Bartender.new("Hilary")
+# puts hilary
 
 # 5. Bartender learns the Bar menu
-
+# puts hilary.current_bar_menu
+hilary.set_current_bar_menu(menu_manager)
+# puts hilary.current_bar_menu
 
 # 6. But what if menu is updated after the fact - when/how should Bartender learn about changes to the menu?

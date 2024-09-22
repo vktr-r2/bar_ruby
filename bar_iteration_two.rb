@@ -8,31 +8,40 @@ class Bar
         @bar_systems = bar_systems
     end
 
+    public
     def to_s
         "#{name}"
     end
 
     def bar_systems=(*args)
-        args.each do |arg|
-          @bar_systems << arg
-        end
+        @bar_systems.concat(*args)
     end
 
 end
 
 # Responsible for teaching a Bartender what Bar serves (allows Bartender to work at different Bars)
-class BarTrainer
+class BarSystemsManager
+
+    attr_reader :bar, :menu
 
     def initialize(bar)
         @bar = bar
+        @bar_systems = bar.bar_systems
+        @menu = make_menu(@bar_systems)
     end
 
-    def make_menu
-    
-    end
-
+    protected
     def teach_menu
-    
+        menu
+    end
+
+    private
+    def make_menu(bar_systems)
+        menu = {}
+        bar_systems.each do |system|
+            menu[system.name] = system.products
+        end
+        menu
     end
 
 end
@@ -46,7 +55,8 @@ class Human
         @name = name
         @chat_topics = []
     end
-
+    
+    public
     def add_chat_topics(*args)
         args.each do |arg|
             @chat_topics << arg
@@ -57,12 +67,10 @@ class Human
         "#{name}"
     end
 
-    # Abstract method that must be implemented in subclasses
     def chat
       raise NotImplementedError, "You must implement the chat method"
     end
   
-    # Abstract method that must be implemented in subclasses
     def clean
       raise NotImplementedError, "You must implement the clean method"
     end
@@ -71,7 +79,7 @@ end
 class Bartender < Human
 
     public
-    def learn_bar_menu(BarTrainer)
+    def train_bartender(bar_trainer)
     
     end
 
@@ -105,8 +113,8 @@ end
 class BarSystem
     attr_accessor :products
     
-    def initialize(products=[])
-        @products = products
+    def initialize(*args)
+        @products = args
     end
 
     def add_products(*args)
@@ -127,6 +135,12 @@ class BarSystem
 end
 
 class FoodSystem < BarSystem
+    attr_reader :name
+
+    def initialize(*args)
+        super(*args)
+        @name = "Foods"
+    end
 
     def make_product(*args)
         args.each do |arg|
@@ -136,6 +150,12 @@ class FoodSystem < BarSystem
 end
 
 class CocktailSystem < BarSystem
+    attr_reader :name
+
+    def initialize(*args)
+        super(*args)
+        @name = "Cocktails"
+    end
     
     def make_product(*args)
         args.each do |arg|
@@ -145,6 +165,12 @@ class CocktailSystem < BarSystem
 end
 
 class BeerSystem < BarSystem
+    attr_reader :name
+
+    def initialize(*args)
+        super(*args)
+        @name = "Beers"
+    end
 
     def make_product(*args)
         args.each do |arg|
@@ -153,36 +179,26 @@ class BeerSystem < BarSystem
     end
 end
 
-
-
-
+# Steps
+# 1. Instantiate a Bar
 iteration_two_bar = Bar.new("Iteration Two")
-#puts iteration_two_bar
-#iteration_two_bar.bar_system = "Beer", "Whiskey", "Cocktail", "Wine"
-#puts iteration_two_bar.bar_system
 
-hilary = Bartender.new("Hilary")
-#puts hilary
+# 2. Create BarSystems and add products
+beers = BeerSystem.new("Coors Light", "Le Chouffe", "Stella")
+cocktails = CocktailSystem.new("Old Fashioned", "Margarita", "Martini", "Cesar")
+foods = FoodSystem.new("Fries", "Wings", "Nachos")
 
-#hilary.add_chat_topics("How was your day?", "The weather today is crazy, right?", "Politics are a mess!")
-#puts hilary.chat_topics
-#hilary.clean
+# 3. Add BarSystems to Bar
+iteration_two_bar.bar_systems = cocktails, beers, foods
 
-#food_system = FoodSystem.new(["Burger", "Fries", "Salad"])
-#food_system.add_products("Pizza", "Salad")
-#puts "AFTER ADDING PRODUCTS:"
-#puts food_system.products
-#food_system.remove_products("Sushi", "Salad")
-#puts "AFTER REMOVING PRODUCTS:"
-#puts food_system.products
+# 3. Create BarSystemsManager object for this particular bar (creates the menu based on BarSystems installed in the Bar)
+bar_system_manager = BarSystemsManager.new(iteration_two_bar)
+puts bar_system_manager.menu
 
-#cocktail_system = CocktailSystem.new(["Martini", "Margarita", "Old Fashioned"])
+# 4. Create Bartender
 
-#iteration_two_bar.bar_systems = [food_system, cocktail_system]
-#puts iteration_two_bar.bar_systems
 
-beer_system = BeerSystem.new()
-beer_system.add_products("Stella", "Coors Light", "Le Chouffe", "Big Wheel")
-#puts beer_system.products
-beer_system.remove_products("Stella")
-#puts beer_system.products
+# 5. Bartender learns the Bar menu
+
+
+# 6. But what if menu is updated after the fact - when/how should Bartender learn about changes to the menu?

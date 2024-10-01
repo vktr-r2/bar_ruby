@@ -1,3 +1,5 @@
 group :development, :test do
-    gem 'rspec'
+  gem 'rspec'
 end
+
+gem 'rubocop', require: false

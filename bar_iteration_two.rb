@@ -80,8 +80,9 @@ class Bartender < Human
     @current_bar_menu = {}
   end
 
-  def order(*args)
-    check_if_bar_serves_product(args)
+  def make_order(*args)
+    order = check_if_bar_serves_product(*args)
+    order.each { |item| puts "Here is your item: #{item}" }
   end
 
   def chat
@@ -102,20 +103,22 @@ class Bartender < Human
   def check_if_bar_serves_product(*args)
     available_order = []
     args.each do |item|
-      menu.each do |_category, items|
-        if items.include?(item)
-          available_order << item
-        else
-          puts "We don't serve #{item}"
-        end
+      item_found = false
+
+      @current_bar_menu.each do |_category, items|
+        next unless items.include?(item)
+
+        available_order << item
+        item_found = true
+        break # Exit the loop once the item is found in a category
       end
+
+      puts "We don't serve #{item}" unless item_found
     end
     available_order
   end
 
   def make_product; end
-
-  def serve_order; end
 
   def learn_menu(menu_manager)
     menu_manager.teach_menu
@@ -205,7 +208,7 @@ iteration_two_bar.bar_systems = cocktails, beers, foods
 
 # 3. Create MenuManager object for this particular bar (creates the menu based on BarSystems installed in the Bar)
 menu_manager = MenuManager.new(iteration_two_bar)
-puts menu_manager.menu
+# puts menu_manager.menu
 
 # 4. Create Bartender
 hilary = Bartender.new('Hilary')
@@ -217,4 +220,4 @@ hilary.set_current_bar_menu(menu_manager)
 # puts hilary.current_bar_menu
 
 # 6. Bartender is now able to take an order
-hilary.order
+hilary.make_order('Calimari', 'Wings', 'Cesar')
